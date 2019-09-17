@@ -1,0 +1,9 @@
+Esto
+es
+una
+prueba
+para
+usar
+la
+funcion
+open
