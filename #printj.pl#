@@ -8,7 +8,7 @@ sub getPercents {
     my $string = shift;
     my @percents = ();
 
-    while ($string =~ m/(%(?:\d+(?:.\d+)?)?[sdxf])/g){
+    while ($string =~ m/(%(?:\d+(?:\.\d+)?)?[sdxf])/g){
         push @percents, $1;
     }
 
@@ -17,7 +17,7 @@ sub getPercents {
 
 
 sub checkTypes {
-    print scalar(shift)->[0];
+    
 }
 
 
