@@ -23,8 +23,8 @@ sub checkTypes {
     my $size = scalar(@percents);
 
     foreach my $n (0..$size - 1) {
-	my $currArg = $args[$n];
-	my $currFormat = substr($percents[$n],-1);
+        my $currArg = $args[$n];
+        my $currFormat = substr($percents[$n],-1);
 	
         $currFormat eq 's' && $currArg =~ m/^\D+$/ ||
         $currFormat =~ m/[dx]/ && $currArg =~ m/^\d+$/ ||
