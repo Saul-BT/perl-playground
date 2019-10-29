@@ -17,7 +17,6 @@ sub getPercents {
 
 
 sub checkTypes {
-    my $validator = 1;
     my @percents = @{scalar(shift)};
     my @args = @{scalar(shift)};
     my $size = scalar(@percents);
@@ -34,15 +33,35 @@ sub checkTypes {
 }
 
 
+sub jformat {
+    my $infix = shift;
+    my $percent = shift;
+
+    $infix;
+}
+
+
 sub printj {
     my $strToProcess = shift;
     my @args = @_;
-    my @printjPercents = getPercents($strToProcess);
-
-    scalar(@args) == scalar(@printjPercents) or die
+    my @percents = getPercents($strToProcess);
+    my $size = scalar(@percents);
+    
+    scalar(@args) == scalar(@percents) or die
     "Number of arguments doesn't match number of percentages";
 
-    checkTypes(\@printjPercents, \@args);
+    checkTypes(\@percents, \@args);
+
+    
+    foreach my $n (0..$size - 1) {
+        my $currArg = $args[$n];
+        my $currFormat = $percents[$n];
+	my $formattedArg = jformat($currArg, $currFormat);
+
+	$strToProcess =~ s/$currFormat/$formattedArg/;
+    }
+
+    print $strToProcess;
 }
 
-printj "string: %s, number: %d, with padding: %05d, hex: %x, decimal: %5.2f.\n", "hello", 5, 33, 4, 5.6;
+printj "string: %s, number: %d, with padding: %d, hex: %x, decimal: %5.2f.\n", "hello", 5, 33, 4, 5.6;
