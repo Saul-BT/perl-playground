@@ -17,27 +17,27 @@ $co->define_color('orange', 871, 541, 8);
 my @colors = $co->get_colors();
 
 
-my $rootWindow = $ui->add(
+my $root_window = $ui->add(
     'rootWindow', 'Window',
     -bfg            => 'green',
     -border         => 1,
     -y              => 1,
 );
 
-my $tetrisWindow = $rootWindow->add(
+my $tetris_window = $root_window->add(
     'nextShapeWindow', 'Window',
     -bfg            => 'purple',
     -border         => 1,
     -centered       => 1,
-    -height         => $rootWindow->height,
-    -width          => $rootWindow->width / 3,
+    -height         => $root_window->height,
+    -width          => $root_window->width / 3,
 );
 
 # Do something with $name xD
 # Ex. store info about scores
 # my $name = $ui->question(-question => "What's your name?");
 
-sub getShapeProps {
+sub get_shape_props {
 
     my @shapes = (
 	{'item'  => "##\n##",      # 0
@@ -59,12 +59,12 @@ sub getShapeProps {
     $shapes[rand(@shapes)];
 }
 
-my %randShapeEntry = %{getShapeProps()};
+my %rand_shape_entry = %{get_shape_props()};
 
-my $label = $tetrisWindow->add(
+my $label = $tetris_window->add(
     'tetrisShape', 'Label',
-    -text      => $randShapeEntry{'item'},
-    -fg        => $randShapeEntry{'color'},
+    -text      => $rand_shape_entry{'item'},
+    -fg        => $rand_shape_entry{'color'},
     -bold      => 1,
 );
 
