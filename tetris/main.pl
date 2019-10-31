@@ -1,6 +1,15 @@
 use strict;
 use Curses::UI;
 
+my $c = Curses::UI::Color->new(
+    -default-colors => 1,
+);
+
+$c->define_color('purple', 900, 220, 10);
+
+my $colors = join '-', $c->get_colors();
+
+# A way to add defined colors to my UI?
 my $ui = Curses::UI->new(
     -color_support  =>  1,
     -mouse_support  =>  0,
@@ -19,29 +28,39 @@ my $parentWindow = $ui->add(
 # Ej. store info about scores
 # my $name = $ui->question(-question => "What's your name?");
 
-sub getShape {
+sub getShapeProps {
 
     my @shapes = (
-	"##\n##",      # 0
-	"#\n#\n#\n#",  # I
-	" ##\n## ",    # S
-	"## \n ##",    # Z
-	"#\n#\n##",    # L
-	" #\n #\n##",  # J
-	"###\n #",     # T
+	{'item'  => "##\n##",      # 0
+	 'color' => 'yellow'},
+        {'item'  => "#\n#\n#\n#",  # I
+	 'color' => 'blue'},
+        {'item'  => " ##\n## ",    # S
+	 'color' => 'red'},
+        {'item'  => "## \n ##",    # Z
+	 'color' => 'green'},
+        {'item'  => "#\n#\n##",    # L
+	 'color' => 'orange'},
+        {'item'  => " #\n #\n##",  # J
+	 'color' => 'magenta'},
+        {'item'  => "###\n #",     # T
+         'color' => 'purple'},
     );
 
-    $shapes[int(rand(scalar(@shapes)))];
+    $shapes[rand(@shapes)];
 }
 
-my $randShape = getShape();
+my %randShapeEntry = %{getShapeProps()};
 
 my $label = $parentWindow->add(
-    'mylabel', 'Label',
-    -text      => $randShape,
+    'tetrisShape', 'Label',
+    #-text      => $colors,
+    -text      => $randShapeEntry{'item'},
+    -fg        => $randShapeEntry{'color'},
     -bold      => 1,
 );
 
+#$label->set_color_fg('purple');
 $label->draw();
 
 $ui->set_binding( \&exit_dialog , "\cQ");
