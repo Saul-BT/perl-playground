@@ -8,7 +8,7 @@ my $ui = Curses::UI->new(
     -debug          =>  0
 );
 
-my $co = $Curses::UI::color_object;
+my $co = $ui->color(); # Or $Curses::UI::color_object
 
 # Defining custom colors
 $co->define_color('purple', 706, 86, 949);
@@ -17,11 +17,20 @@ $co->define_color('orange', 871, 541, 8);
 my @colors = $co->get_colors();
 
 
-my $parentWindow = $ui->add(
-    'parentWindow', 'Window',
+my $rootWindow = $ui->add(
+    'rootWindow', 'Window',
     -bfg            => 'green',
     -border         => 1,
     -y              => 1,
+);
+
+my $tetrisWindow = $rootWindow->add(
+    'nextShapeWindow', 'Window',
+    -bfg            => 'purple',
+    -border         => 1,
+    -centered       => 1,
+    -height         => $rootWindow->height,
+    -width          => $rootWindow->width / 3,
 );
 
 # Do something with $name xD
@@ -52,7 +61,7 @@ sub getShapeProps {
 
 my %randShapeEntry = %{getShapeProps()};
 
-my $label = $parentWindow->add(
+my $label = $tetrisWindow->add(
     'tetrisShape', 'Label',
     -text      => $randShapeEntry{'item'},
     -fg        => $randShapeEntry{'color'},
@@ -62,4 +71,5 @@ my $label = $parentWindow->add(
 $label->draw();
 
 $ui->set_binding( \&exit_dialog , "\cQ");
+
 $ui->mainloop();
